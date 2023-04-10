@@ -1,0 +1,10 @@
+body {
+    background-color: #ECF0F1;
+}
+
+.page-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
