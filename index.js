@@ -7,6 +7,10 @@ const cookieParser = require("cookie-parser")
 const app = express();
 
 const agreements_type = require('./routers/agreements_type')
+const user = require('./routers/user')
+const view_routers = require('./routers/view_routers')
+const file = require('./routers/file')
+const agreement = require('./routers/agreement')
 
 const port = process.env.PORT || 8080;
 
@@ -38,17 +42,16 @@ mongoose.connect('mongodb://localhost:27017/information_security')
     console.error('MongoDBga ulanish vaqtida xato ro\'y berdi...', err);
   });
 
-
 app.use('/agreements-type', agreements_type)
+app.use('/user', user)
+app.use('/', view_routers)
+app.use('/file', file)
+app.use('/agreement', agreement)
 
 app.get("/", (req, res) => {
   return res.render('login', {})
 });
 
-app.get("/main", (req, res) => {
-    return res.render('main', {})
-});
-
-app.listen(port, ()=> {
+app.listen(port, () => {
   console.log(`Application is up and running under localhost:${port}`)
 })

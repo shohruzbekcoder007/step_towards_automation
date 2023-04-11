@@ -12,7 +12,7 @@ const AgreementsType = mongoose.model('agreements_types', AgreementsTypeSchema);
 
 function validateAgreementsType(question) {
   const schema = Joi.object({
-    name: Joi.string().required()
+    name: Joi.string().min(3).required()
   });
 
   return schema.validate(question);

@@ -1,0 +1,125 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  title Axborot xavfsizligi boshqarmasi
+  link(rel='stylesheet' href='/css/semantic.min.css' crossorigin='anonymous')
+  link(rel='stylesheet' href='/css/agreements_type.css' crossorigin='anonymous')
+body
+#sidebar.ui.sidebar.inverted.vertical.menu.sidebar-menu
+  .item
+    .header General
+    .menu
+      a.item
+        div
+          i.icon.tachometer.alternate
+          | Dashboard
+  .item
+    .header Foydalanuvchilar
+    .menu
+      a.item
+        div
+          i.cogs.icon
+          | Ruxsat turlari
+      a.item
+        div
+          i.users.icon
+          | Foydalanuvchilar ro'yxati
+  .item
+    .header Shartnomalar
+    .menu
+      a.item(href="/agreements-type")
+        div
+          i.cogs.icon
+          | Shartnoma turlari
+      a.item(href="/agreements")
+        div
+          i.users.icon
+          | Shartnomalar ro'yxati
+  .item
+    .header Tashqi ip addresslar
+    .menu
+      a.item
+        div
+          i.cogs.icon
+          | Shartnoma turlari
+      a.item
+        div
+          i.users.icon
+          | Shartnomalar ro'yxati
+  a.item
+    div
+      i.icon.lightbulb
+      | Loglar bilan ishlash
+  .item
+    .header Other
+    .menu
+      a.item(href='#')
+        div
+          i.icon.envelope
+          |               Messages
+      a.item(href='#')
+        div
+          i.icon.calendar.alternate
+          |               Calendar
+  .ui.segment.inverted
+    .ui.tiny.olive.inverted.progress
+      .bar(style='width: 54%')
+      .label Monthly Bandwidth
+    .ui.tiny.teal.inverted.progress
+      .bar(style='width:78%')
+      .label Disk Usage
+
+nav.ui.top.fixed.inverted.menu
+  .left.menu
+    a.sidebar-menu-toggler.item(href='#' data-target='#sidebar')
+      i.sidebar.icon
+    a.header.item(href='#')
+      | Axborot xavfsizligi boshqarmasi
+  .right.menu
+    a.item(href='#')
+      i.bell.icon
+    .ui.dropdown.item
+      i.user.cirlce.icon
+      .menu
+        a.item(href='#')
+          i.info.circle.icon
+          |  Profile
+        a.item(href='#')
+          i.wrench.icon
+          | Settings
+        a.item(href='#')
+          i.sign-out.icon
+          | Logout
+.pusher(style="padding-top: 50px;")
+    .ui.container(style="padding-bottom: 30px;")
+        .ui.inverted.segment
+            .ui.inverted.form
+                .field
+                    label Yangi Shartnoma turi
+                    input(type="text", id="new-agreements-name" placeholder="Yangi shartnoma turi")
+                .ui.submit.button#agreements-add-btn Qo'shish
+        h1.ui.text(style="text-align: center") Shartnoma turlari
+        table.ui.celled.table
+            thead
+                tr
+                    th TR
+                    th Nomi
+                    th O'zgartirish/O'chirish
+            tbody#agreements-tb
+        #agreements-modal.agreements-modal.dbn
+            .ui.container
+                .ui.inverted.segment
+                    .ui.inverted.form
+                        .field
+                            label Shartnoma turi nomini o'zgartirish
+                            input(type="text", id="update-agreements-name" placeholder="o'zgaradigan shartnoma nomi")
+                        div(style="display: flex; justify-content: flex-end;")
+                            .ui.submit.button#agreements-update-btn O'zgartirish
+                            .ui.submit.button#agreements-exit-btn Chiqish
+script(src="/js/jquery.js") 
+script(src="/js/semantic.min.js") 
+script(src="/js/axios.js")
+script(src="/js/main.js")
+script(src="/js/agreements_type.js")

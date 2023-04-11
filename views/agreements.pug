@@ -1,0 +1,169 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  title Axborot xavfsizligi boshqarmasi
+  link(rel='stylesheet' href='/css/semantic.min.css' crossorigin='anonymous')
+  link(rel='stylesheet' href='/css/agreements_type.css' crossorigin='anonymous')
+body
+#sidebar.ui.sidebar.inverted.vertical.menu.sidebar-menu
+  .item
+    .header General
+    .menu
+      a.item
+        div
+          i.icon.tachometer.alternate
+          | Dashboard
+  .item
+    .header Foydalanuvchilar
+    .menu
+      a.item
+        div
+          i.cogs.icon
+          | Ruxsat turlari
+      a.item
+        div
+          i.users.icon
+          | Foydalanuvchilar ro'yxati
+  .item
+    .header Shartnomalar
+    .menu
+      a.item(href="/agreements-type")
+        div
+          i.cogs.icon
+          | Shartnoma turlari
+      a.item(href="/agreements")
+        div
+          i.users.icon
+          | Shartnomalar ro'yxati
+  .item
+    .header Tashqi ip addresslar
+    .menu
+      a.item
+        div
+          i.cogs.icon
+          | Shartnoma turlari
+      a.item
+        div
+          i.users.icon
+          | Shartnomalar ro'yxati
+  a.item
+    div
+      i.icon.lightbulb
+      | Loglar bilan ishlash
+  .item
+    .header Other
+    .menu
+      a.item(href='#')
+        div
+          i.icon.envelope
+          |               Messages
+      a.item(href='#')
+        div
+          i.icon.calendar.alternate
+          |               Calendar
+  .ui.segment.inverted
+    .ui.tiny.olive.inverted.progress
+      .bar(style='width: 54%')
+      .label Monthly Bandwidth
+    .ui.tiny.teal.inverted.progress
+      .bar(style='width:78%')
+      .label Disk Usage
+
+nav.ui.top.fixed.inverted.menu
+  .left.menu
+    a.sidebar-menu-toggler.item(href='#' data-target='#sidebar')
+      i.sidebar.icon
+    a.header.item(href='#')
+      | Axborot xavfsizligi boshqarmasi
+  .right.menu
+    a.item(href='#')
+      i.bell.icon
+    .ui.dropdown.item
+      i.user.cirlce.icon
+      .menu
+        a.item(href='#')
+          i.info.circle.icon
+          |  Profile
+        a.item(href='#')
+          i.wrench.icon
+          | Settings
+        a.item(href='#')
+          i.sign-out.icon
+          | Logout
+.pusher(style="padding-top: 50px;")
+    .ui.container(style="padding-bottom: 30px;")
+        .ui.inverted.segment
+            .ui.inverted.form
+                .three.fields
+                  .field
+                      label Firma yoki tashkilot nomi
+                      input(type="text", id="new-agreements-name" placeholder="Firma yoki tashkilot nomi")
+                  .field
+                      label Firma yoki tashkilot telfon raqami
+                      input(type="text", id="new-agreements-name" placeholder="Firma yoki tashkilot telfon raqami")
+                  .field
+                      label Shartnoma raqami
+                      input(type="text", id="new-agreements-name" placeholder="Shartnoma raqami")
+                .three.fields
+                  .field
+                      label Shartnoma muddati
+                      input(type="text", id="new-agreements-name" placeholder="Shartnoma muddati")
+                  .field
+                      label Shartnoma turi
+                      input(type="text", id="new-agreements-name" placeholder="Shartnoma turi")
+                  .field
+                      label Ko’rsatilgan xizmat
+                      input(type="text", id="new-agreements-name" placeholder="Ko’rsatilgan xizmat")
+                .ui.submit.button#agreements-add-btn Qo'shish
+        h1.ui.text(style="text-align: center") Shartnomalar
+        <table class="ui celled padded table">
+          thead
+            tr
+              th.single.line Firma yoki tashkilot nomi
+              th Firma yoki tashkilot telfon raqami
+              th Shartnoma raqami
+              th Shartnoma muddati
+              th Shartnoma turi
+              th Ko’rsatilgan xizmat
+          tbody
+          each element in result.agreements
+            tr
+              td= element.organization_name
+              td.single.line= element.organization_name
+              td.single.line= element.contract_number
+              td.single.line= new Date(element.contract_date).toLocaleString()
+              td= element.agreement_type.name
+              td= element.description
+            //- tr
+            //-   td Firma yoki tashkilot nomi
+            //-   td.single.line Firma yoki tashkilot telfon raqami
+            //-   td.single.line Shartnoma raqami
+            //-   td.single.line Shartnoma muddati
+            //-   td Creatine supplementation is the reference compound for increasing muscular creatine levels; there is variability in this increase, however, with some nonresponders.
+            //-   td Creatine supplementation is the reference compound for increasing muscular creatine levels; there is variability in this increase, however, with some nonresponders.
+          <tfoot>
+            <tr>
+              <th colspan="6">
+                <div class="ui right floated pagination menu">
+                  <a class="icon item">
+                    <i class="left chevron icon"></i>
+                  </a>
+                  <a class="item">1</a>
+                  <a class="item">2</a>
+                  <a class="item">3</a>
+                  <a class="item">4</a>
+                  <a class="icon item">
+                    <i class="right chevron icon"></i>
+                  </a>
+                </div>
+              </th>
+            </tr>
+          </tfoot>
+        </table>
+script(src="/js/jquery.js") 
+script(src="/js/semantic.min.js") 
+script(src="/js/axios.js")
+script(src="/js/main.js")
+script(src="/js/agreements_type.js")

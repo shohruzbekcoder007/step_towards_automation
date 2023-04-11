@@ -2,8 +2,10 @@ const express = require('express')
 const router = express.Router()
 const _ = require('lodash')
 const { AgreementsType, validateAgreementsType } = require('./../models/agreements_type')
+const { auth } = require('../middleware/auth')
+const { super_admin } = require('../middleware/super_admin')
 
-router.post('/', async (req, res) => {
+router.post('/', [auth, super_admin], async (req, res) => {
     
     const { error } = validateAgreementsType(req.body);
 
@@ -16,7 +18,7 @@ router.post('/', async (req, res) => {
     return res.status(201).send(_.pick(newagreement, ['_id', 'name']));
 });
 
-router.get('/types', async (req, res) => {
+router.get('/types', [auth, super_admin], async (req, res) => {
     try {
 
         const agreement_types = await AgreementsType.find({});
@@ -27,10 +29,10 @@ router.get('/types', async (req, res) => {
     }
 });
 
-router.get('/type-one', async (req, res) => {
+router.get('/type-one', [auth, super_admin], async (req, res) => {
     try {
-        const { _id } = req.body;
-        const agreement_type = await AgreementsType.findOne({_id: _id});
+        const { id } = req.query;
+        const agreement_type = await AgreementsType.findOne({_id: id});
         res.send(agreement_type);
 
     } catch (error) {
@@ -38,12 +40,12 @@ router.get('/type-one', async (req, res) => {
     }
 });
 
-router.put('/update', async (req, res) => {
+router.put('/update', [auth, super_admin], async (req, res) => {
     try {
 
         const { _id } = _.pick(req.body, ['_id'])
 
-        let agreement = await AgreementsType.findByIdAndUpdate(_id, _.pick(req.body, ['name']));
+        let agreement = await AgreementsType.findByIdAndUpdate(_id, _.pick(req.body, ['name']), {new: true});
         if (!agreement)
             return res.status(400).send('User\'s information is not update');
 
@@ -54,7 +56,7 @@ router.put('/update', async (req, res) => {
     }
 });
 
-router.delete('/remove', async (req, res) => {
+router.delete('/remove', [auth, super_admin], async (req, res) => {
 
     const { _id } = _.pick(req.body, ['_id'])
     

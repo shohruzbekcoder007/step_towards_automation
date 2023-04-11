@@ -1,0 +1,14 @@
+.agreements-modal {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: #aaaaaae3;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+}
+
+.dbn {
+    display: none;
+}
