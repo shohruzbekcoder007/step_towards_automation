@@ -26,6 +26,10 @@ const AgreementSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "agreements_types",
         required: true
+    },
+    agreement_file: {
+        type: String,
+        default: ''
     }
 });
 
@@ -38,6 +42,8 @@ function validateAgreement(question) {
     description: Joi.string().min(3).required(),
     contract_number: Joi.string().min(3).required(),
     agreement_type: Joi.string().min(3).required(),
+    contract_date: Joi.string().min(3).required(),
+    agreement_file: Joi.string().min(3).required(),
   });
 
   return schema.validate(question);

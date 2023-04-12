@@ -6,6 +6,9 @@ head
   title Axborot xavfsizligi boshqarmasi
   link(rel='stylesheet' href='/css/semantic.min.css' crossorigin='anonymous')
   link(rel='stylesheet' href='/css/agreements_type.css' crossorigin='anonymous')
+  script(src="/js/jquery.js") 
+  script(src="/js/semantic.min.js") 
+  script(src="/js/axios.js")
 body
 #sidebar.ui.sidebar.inverted.vertical.menu.sidebar-menu
   .item
@@ -94,76 +97,104 @@ nav.ui.top.fixed.inverted.menu
           | Logout
 .pusher(style="padding-top: 50px;")
     .ui.container(style="padding-bottom: 30px;")
-        .ui.inverted.segment
-            .ui.inverted.form
-                .three.fields
-                  .field
-                      label Firma yoki tashkilot nomi
-                      input(type="text", id="new-agreements-name" placeholder="Firma yoki tashkilot nomi")
-                  .field
-                      label Firma yoki tashkilot telfon raqami
-                      input(type="text", id="new-agreements-name" placeholder="Firma yoki tashkilot telfon raqami")
-                  .field
-                      label Shartnoma raqami
-                      input(type="text", id="new-agreements-name" placeholder="Shartnoma raqami")
-                .three.fields
-                  .field
-                      label Shartnoma muddati
-                      input(type="text", id="new-agreements-name" placeholder="Shartnoma muddati")
-                  .field
-                      label Shartnoma turi
-                      input(type="text", id="new-agreements-name" placeholder="Shartnoma turi")
-                  .field
-                      label Ko’rsatilgan xizmat
-                      input(type="text", id="new-agreements-name" placeholder="Ko’rsatilgan xizmat")
-                .ui.submit.button#agreements-add-btn Qo'shish
-        h1.ui.text(style="text-align: center") Shartnomalar
-        <table class="ui celled padded table">
-          thead
-            tr
-              th.single.line Firma yoki tashkilot nomi
-              th Firma yoki tashkilot telfon raqami
-              th Shartnoma raqami
-              th Shartnoma muddati
-              th Shartnoma turi
-              th Ko’rsatilgan xizmat
-          tbody
-          each element in result.agreements
-            tr
-              td= element.organization_name
-              td.single.line= element.organization_name
-              td.single.line= element.contract_number
-              td.single.line= new Date(element.contract_date).toLocaleString()
-              td= element.agreement_type.name
-              td= element.description
-            //- tr
-            //-   td Firma yoki tashkilot nomi
-            //-   td.single.line Firma yoki tashkilot telfon raqami
-            //-   td.single.line Shartnoma raqami
-            //-   td.single.line Shartnoma muddati
-            //-   td Creatine supplementation is the reference compound for increasing muscular creatine levels; there is variability in this increase, however, with some nonresponders.
-            //-   td Creatine supplementation is the reference compound for increasing muscular creatine levels; there is variability in this increase, however, with some nonresponders.
-          <tfoot>
-            <tr>
-              <th colspan="6">
-                <div class="ui right floated pagination menu">
-                  <a class="icon item">
-                    <i class="left chevron icon"></i>
-                  </a>
-                  <a class="item">1</a>
-                  <a class="item">2</a>
-                  <a class="item">3</a>
-                  <a class="item">4</a>
-                  <a class="icon item">
-                    <i class="right chevron icon"></i>
-                  </a>
-                </div>
-              </th>
-            </tr>
-          </tfoot>
-        </table>
-script(src="/js/jquery.js") 
-script(src="/js/semantic.min.js") 
-script(src="/js/axios.js")
+      .ui.inverted.segment
+          .ui.inverted.form
+              .three.fields
+                .field
+                  label Firma yoki tashkilot nomi
+                  input(type="text", id="organization_name" placeholder="Firma yoki tashkilot nomi")
+                .field
+                  label Firma yoki tashkilot telfon raqami
+                  input(type="text", id="tel_number" placeholder="Firma yoki tashkilot telfon raqami")
+                .field
+                  label Shartnoma raqami
+                  input(type="text", id="contract_number" placeholder="Shartnoma raqami")
+              .three.fields
+                .field
+                  label Shartnoma muddati
+                  .ui.inverted.calendar#inverted_calendar
+                    .ui.fluid.input.left.icon
+                      i.calendar.icon
+                      input#contract_date(type="text", placeholder="Shartnoma muddati")
+                .field
+                  label Shartnoma turi
+                  select.ui.dropdown#agreement_type
+                    option(value) Shartnoma turi
+                .field
+                  label Ko’rsatilgan xizmat
+                  input(type="text", id="description" placeholder="Ko’rsatilgan xizmat")
+              .three.fields
+                .field
+                  span#file_url
+                    b File yuklash
+                  label.ui.icon.button(for="file" style="color: #000") Sharnoma fileni qo'shish
+                  input#file(type="file", style="display:none")
+                .field
+                  label Shartnomani qo'shish
+                  .ui.button#agreement-add Qo'shish
+    .agreements-container
+      h1.ui.text(style="text-align: center") Shartnomalar
+      table.ui.celled.padded.table
+        thead
+          tr
+            th.single.line Firma yoki tashkilot nomi
+            th Firma yoki tashkilot telfon raqami
+            th Shartnoma raqami
+            th Shartnoma muddati
+            th Shartnoma turi
+            th Ko’rsatilgan xizmat
+            th Biriktirilgan file
+            th Izlash/O'chirish
+          tr.ui.form
+            th.single.line 
+              input#organization_name_search(type="text", value=result.search.organization_name, placeholder="Firma yoki tashkilot nomi")
+            th
+              input#tel_number_search(type="text", value=result.search.tel_number, placeholder="Firma yoki tashkilot telfon raqami")
+            th
+              input#contract_number_search(type="text", value=result.search.contract_number, placeholder="Shartnoma raqami")
+            th 
+            th
+              select.ui.dropdown#agreement_type_search(value=result.search.agreement_type)
+                option(value) Shartnoma turi
+            th
+              input#description_search(type="text", value=result.search.description, placeholder="Ko’rsatilgan xizmat")
+            th 
+            th 
+              button.ui.button Izlash
+        tbody
+        each element in result.agreements
+          tr
+            td= element.organization_name
+            td.single.line= element.tel_number
+            td.single.line= element.contract_number
+            td.single.line= new Date(element.contract_date).toLocaleString()
+            td= element.agreement_type.name
+            td= element.description
+            td
+              if(element.agreement_file)
+                a(href=element.agreement_file, target="_blank", rel="noopener noreferrer") File
+            td
+              button.ui.button(data-id=element._id onclick="removeAgreements(event)") O'chirish
+        tfoot
+          tr
+            th(colspan="8")
+              .ui.right.floated.pagination.menu
+                if(result.page - 1 >= 1)
+                  a.icon.item(href=`/agreements/?page=${result.page-1}` style="cursor: pointer")
+                    i.left.chevron.icon
+                else
+                  a.icon.item
+                    i.left.chevron.icon
+                if(result.page - 1 >= 1)
+                  a.item(href=`/agreements/?page=${result.page-1}` style="cursor: pointer")= result.page-1
+                a.item= result.page
+                if(result.page + 1 <= result.totalPages)
+                  a.item(href=`/agreements/?page=${result.page+1}` style="cursor: pointer")= result.page+1
+                if(result.page + 1 <= result.totalPages)
+                  a.icon.item(href=`/agreements/?page=${result.page+1}` style="cursor: pointer")
+                    i.right.chevron.icon
+                else
+                  a.icon.item
+                    i.right.chevron.icon
 script(src="/js/main.js")
-script(src="/js/agreements_type.js")
+script(src="/js/agreements.js")

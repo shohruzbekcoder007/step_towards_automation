@@ -12,10 +12,10 @@ router.post('/', [auth, super_admin], async (req, res) => {
     if(error)
         return res.status(400).send(error.details[0].message);
     
-    let agreement = new Agreement(_.pick(req.body, ['organization_name', 'tel_number', 'description', 'contract_number', 'contract_date', 'agreement_type']));
+    let agreement = new Agreement(_.pick(req.body, ['organization_name', 'tel_number', 'description', 'contract_number', 'contract_date', 'agreement_type', 'agreement_file']));
     let newagreement = await agreement.save();
     
-    return res.status(201).send(_.pick(newagreement, ['organization_name', 'tel_number', 'description', 'contract_number', 'contract_date', 'agreement_type']));
+    return res.status(201).send(_.pick(newagreement, ['organization_name', 'tel_number', 'description', 'contract_number', 'contract_date', 'agreement_type', 'agreement_file']));
 });
 
 router.get('/agreements', [auth, super_admin], async (req, res) => {
@@ -86,6 +86,17 @@ router.get('/agreements', [auth, super_admin], async (req, res) => {
         return res.send([])
     }
 
+});
+
+router.delete('/remove', [auth, super_admin], async (req, res) => {
+
+    const { _id } = _.pick(req.body, ['_id'])
+    
+    let agreement = await Agreement.findByIdAndRemove(_id);
+    if (!agreement)
+        return res.status(400).send('Agreement\'s information is not remove');
+
+    return res.send(agreement);
 });
 
 module.exports = router;

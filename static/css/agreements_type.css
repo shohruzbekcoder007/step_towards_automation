@@ -12,3 +12,16 @@
 .dbn {
     display: none;
 }
+
+#file_url{
+    padding-bottom: 6px;
+    display: inline-block;
+}
+
+.text-green {
+    color: green;
+}
+
+.agreements-container{
+    padding: 0 20px;
+}

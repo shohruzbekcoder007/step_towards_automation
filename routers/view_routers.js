@@ -27,12 +27,20 @@ router.get('/agreements', [auth, super_admin], async (req, res) => {
         const contract_number = new RegExp(q_contract_number, 'i')
         const agreement_type = req.query.agreement_type || null
 
+        const search = {
+            organization_name: q_organization_name,
+            tel_number: q_tel_number,
+            description: q_description,
+            contract_number: q_contract_number,
+            agreement_type
+        }
+
         let agreements = []
         let count = 0
         if(agreement_type){
 
-            agreements = await Agreement.find({ 
-                organization_name: organization_name,  
+            agreements = await Agreement.find({
+                organization_name: organization_name,
                 tel_number: tel_number,
                 description: description,
                 contract_number: contract_number,
@@ -40,7 +48,7 @@ router.get('/agreements', [auth, super_admin], async (req, res) => {
             }).sort({_id: -1}).limit(limit).skip((page - 1)*limit)
 
             count = await Agreement.countDocuments({
-                organization_name: organization_name,  
+                organization_name: organization_name,
                 tel_number: tel_number,
                 description: description,
                 contract_number: contract_number,
@@ -70,6 +78,7 @@ router.get('/agreements', [auth, super_admin], async (req, res) => {
         result.agreements = agreements
         result.page = page
         result.totalPages = totalPages
+        result.search = search
 
         return res.render('agreements', {
             result: result

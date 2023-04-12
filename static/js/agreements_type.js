@@ -1,4 +1,9 @@
 $(document).ready(function () {
+
+    $('#inverted_calendar').calendar({
+        type: 'date'
+    });
+
     (() => {
         const options = {
             url: '/agreements-type/types',
