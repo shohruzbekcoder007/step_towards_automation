@@ -11,6 +11,8 @@ const user = require('./routers/user')
 const view_routers = require('./routers/view_routers')
 const file = require('./routers/file')
 const agreement = require('./routers/agreement')
+const logs = require('./routers/logs_to_servers')
+const computer = require('./routers/computer')
 
 const port = process.env.PORT || 8080;
 
@@ -47,6 +49,8 @@ app.use('/user', user)
 app.use('/', view_routers)
 app.use('/file', file)
 app.use('/agreement', agreement)
+app.use('/logs', logs)
+app.use('/computer', computer)
 
 app.get("/", (req, res) => {
   return res.render('login', {})

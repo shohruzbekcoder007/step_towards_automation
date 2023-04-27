@@ -55,7 +55,7 @@ $(document).ready(function () {
         formData.contract_date = new Date($('#contract_date').val())
         formData.agreement_type = $('#agreement_type').val()
         formData.description = $('#description').val()
-        formData.agreement_file = $('#file_url').attr( "file_url" )
+        formData.agreement_file = $('#file_url').attr("file_url")
 
         console.log(formData)
 
@@ -72,10 +72,14 @@ $(document).ready(function () {
         }
 
     })
+
+    $('#agreements_search_btn').click(function(event){
+        window.location.href = `/agreements/?page=1&organization_name=${$('#organization_name_search').val()}&contract_number=${$('#contract_number_search').val()}&tel_number=${$('#tel_number_search').val()}&agreement_type=${$('#agreement_type_search').val()}&description=${$('#description_search').val()}`
+        console.log(`/agreements/?page=1&organization_name=${$('#organization_name_search').val()}&contract_number=${$('#contract_number_search').val()}&tel_number=${$('#tel_number_search').val()}&agreement_type=${$('#agreement_type_search').val()}&description=${$('#description_search').val()}`)
+    })
 })
 
-function removeAgreements(event){
-    console.log(event.target.getAttribute("data-id"));
+function removeAgreements(event) {
     const options = {
         url: '/agreement/remove',
         method: 'DELETE',
@@ -94,4 +98,4 @@ function removeAgreements(event){
         }).catch(error => {
             window.location.reload();
         });
-    }
+}

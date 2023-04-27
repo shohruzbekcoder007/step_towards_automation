@@ -22,8 +22,9 @@ router.get('/agreements', [auth, super_admin], async (req, res) => {
 
     const limit = parseInt(req.query.limit) || 10;
     const page = parseInt(req.query.page) || 1;
-
+    
     try {
+
         
         const q_organization_name = req.query.organization_name || ''
         const q_tel_number = req.query.tel_number || ''

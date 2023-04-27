@@ -1,0 +1,131 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  title Axborot xavfsizligi boshqarmasi
+  link(rel='stylesheet' href='/css/semantic.min.css' crossorigin='anonymous')
+  link(rel='stylesheet' href='/css/agreements_type.css' crossorigin='anonymous')
+  script(src="/js/jquery.js") 
+  script(src="/js/semantic.min.js") 
+  script(src="/js/axios.js")
+body
+include includes/sidebar.pug
+
+nav.ui.top.fixed.inverted.menu
+  .left.menu
+    a.sidebar-menu-toggler.item(href='#' data-target='#sidebar')
+      i.sidebar.icon
+    a.header.item(href='#')
+      | Axborot xavfsizligi boshqarmasi
+  .right.menu
+    a.item(href='#')
+      i.bell.icon
+    .ui.dropdown.item
+      i.user.cirlce.icon
+      .menu
+        a.item(href='#')
+          i.info.circle.icon
+          |  Profile
+        a.item(href='#')
+          i.wrench.icon
+          | Settings
+        a.item(href='#')
+          i.sign-out.icon
+          | Logout
+.pusher(style="padding-top: 50px;")
+    .ui.container(style="padding-bottom: 30px;")
+      .ui.inverted.segment
+          .ui.inverted.form
+              .three.fields
+                .field
+                  label Kompyuterning nomeri
+                  input(type="text", id="computer_number" placeholder="Kompyuterning nomeri")
+                .field
+                  label Modeli
+                  input(type="text", id="model" placeholder="Modeli")
+                .field
+                  label Ram
+                  input(type="text", id="ram" placeholder="Ram")
+              .three.fields
+                .field
+                  label Cpu
+                  input(type="text", id="cpu" placeholder="Cpu")
+                .field
+                  label Xotira
+                  input(type="text", id="memory" placeholder="Xotira")
+                .field
+                  label Video card
+                  input(type="text", id="video_card" placeholder="Video card")
+              .three.fields
+                .field
+                  label Ekran o'lchami
+                  input(type="text", id="window_size" placeholder="Ekran o'lchami")
+                .field
+                  label Kompyuterni qo'shish
+                  .ui.button#computer-add Qo'shish
+    .agreements-container
+      h1.ui.text(style="text-align: center") Kompyuter
+      table.ui.celled.padded.table
+        thead
+          tr
+            th.single.line Kompyuterning nomeri
+            th Modeli
+            th Ram
+            th Cpu
+            th Xotira
+            th Video card
+            th Ekran o'lchami
+            th Izlash/O'chirish
+          tr.ui.form
+            th.single.line
+              input#computer_number_search(type="text", value=result.search.computer_number, placeholder="Kompyuterning nomeri")
+            th
+              input#model_search(type="text", value=result.search.model, placeholder="Modeli")
+            th
+              input#ram_search(type="text", value=result.search.ram, placeholder="Ram")
+            th
+              input#cpu_search(type="text", value=result.search.cpu, placeholder="Cpu")
+            th
+              input#memory_search(type="text", value=result.search.memory, placeholder="Xotira")
+            th
+              input#video_card_search(type="text", value=result.search.video_card, placeholder="Video card")
+            th
+              input#window_size_search(type="text", value=result.search.window_size, placeholder="Ekran o'lchami")
+            th
+              button.ui.button#computer_search_btn Izlash
+        tbody
+            each element in result.computers
+                tr
+                    td= element.computer_number
+                    td.single.line= element.model
+                    td.single.line= element.ram
+                    td.single.line= element.cpu
+                    td= element.memory
+                    td= element.video_card
+                    td= element.window_size
+                    td
+                        button.ui.button(data-id=element._id onclick="removeComputer(event)") O'chirish
+        tfoot
+          tr
+            th(colspan="8")
+              .ui.right.floated.pagination.menu
+                if(result.page - 1 >= 1)
+                  a.icon.item(href=`/computer/?page=${result.page-1}&computer_number=${result.search.computer_number}&model=${result.search.model}&ram=${result.search.ram}&cpu=${result.search.cpu}&memory=${result.search.memory}&video_card=${result.search.video_card}&window_size=${result.search.window_size}` style="cursor: pointer")
+                    i.left.chevron.icon
+                else
+                  a.icon.item
+                    i.left.chevron.icon
+                if(result.page - 1 >= 1)
+                  a.item(href=`/computer/?page=${result.page-1}&computer_number=${result.search.computer_number}&model=${result.search.model}&ram=${result.search.ram}&cpu=${result.search.cpu}&memory=${result.search.memory}&video_card=${result.search.video_card}&window_size=${result.search.window_size}` style="cursor: pointer")= result.page-1
+                a.item= result.page
+                if(result.page + 1 <= result.totalPages)
+                  a.item(href=`/computer/?page=${result.page+1}&computer_number=${result.search.computer_number}&model=${result.search.model}&ram=${result.search.ram}&cpu=${result.search.cpu}&memory=${result.search.memory}&video_card=${result.search.video_card}&window_size=${result.search.window_size}` style="cursor: pointer")= result.page+1
+                if(result.page + 1 <= result.totalPages)
+                  a.icon.item(href=`/computer/?page=${result.page+1}&computer_number=${result.search.computer_number}&model=${result.search.model}&ram=${result.search.ram}&cpu=${result.search.cpu}&memory=${result.search.memory}&video_card=${result.search.video_card}&window_size=${result.search.window_size}` style="cursor: pointer")
+                    i.right.chevron.icon
+                else
+                  a.icon.item
+                    i.right.chevron.icon
+script(src="/js/main.js")
+script(src="/js/computer.js")

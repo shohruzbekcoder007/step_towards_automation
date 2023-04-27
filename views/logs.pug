@@ -1,0 +1,102 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  title Axborot xavfsizligi boshqarmasi
+  link(rel='stylesheet' href='/css/semantic.min.css' crossorigin='anonymous')
+  link(rel='stylesheet' href='/css/agreements_type.css' crossorigin='anonymous')
+  script(src="/js/jquery.js") 
+  script(src="/js/semantic.min.js") 
+  script(src="/js/axios.js")
+body
+include includes/sidebar.pug
+
+nav.ui.top.fixed.inverted.menu
+  .left.menu
+    a.sidebar-menu-toggler.item(href='#' data-target='#sidebar')
+      i.sidebar.icon
+    a.header.item(href='#')
+      | Axborot xavfsizligi boshqarmasi
+  .right.menu
+    a.item(href='#')
+      i.bell.icon
+    .ui.dropdown.item
+      i.user.cirlce.icon
+      .menu
+        a.item(href='#')
+          i.info.circle.icon
+          |  Profile
+        a.item(href='#')
+          i.wrench.icon
+          | Settings
+        a.item(href='#')
+          i.sign-out.icon
+          | Logout
+.pusher(style="padding-top: 50px;")
+    .ui.container(style="padding-bottom: 30px;")
+      .ui.inverted.segment
+          .ui.inverted.form
+              .three.fields
+                .field
+                  label Server
+                  input(type="text", id="server_name" placeholder="Server")
+                .field
+                  label Xabar manzili
+                  input(type="text", id="address" placeholder="Xabar manzili")
+                .field
+                  label Xabar
+                  input(type="text", id="message" placeholder="Xabar")
+              .three.fields
+                .field
+                  label Xabarni qo'shish
+                  .ui.button#log-add Qo'shish
+    .agreements-container
+      h1.ui.text(style="text-align: center") Logs(Xabarlar)
+      table.ui.celled.padded.table
+        thead
+          tr
+            th.single.line Server
+            th Xabar manzili
+            th Xabar
+            th Izlash/O'chirish
+          tr.ui.form
+            th.single.line 
+              input#server_name_search(type="text", value=result.search.server_name, placeholder="Server")
+            th
+              input#address_search(type="text", value=result.search.address, placeholder="Xabar manzili")
+            th
+              input#message_search(type="text", value=result.search.message, placeholder="Xabar")
+            th 
+              button.ui.button#logs_search_btn Izlash
+        tbody
+        each element in result.logs
+          tr
+            td= element.server_name
+            td.single.line= element.address
+            td.single.line= element.message
+            td
+              button.ui.button(data-id=element._id onclick="removeLogs(event)") O'chirish
+        tfoot
+          tr
+            th(colspan="4")
+              .ui.right.floated.pagination.menu
+                if(result.page - 1 >= 1)
+                  a.icon.item(href=`/all-logs/?page=${result.page-1}&server_name=${result.search.server_name}&address=${result.search.address}&message=${result.search.message}` style="cursor: pointer")
+                    i.left.chevron.icon
+                else
+                  a.icon.item
+                    i.left.chevron.icon
+                if(result.page - 1 >= 1)
+                  a.item(href=`/all-logs/?page=${result.page-1}&server_name=${result.search.server_name}&address=${result.search.address}&message=${result.search.message}` style="cursor: pointer")= result.page-1
+                a.item= result.page
+                if(result.page + 1 <= result.totalPages)
+                  a.item(href=`/all-logs/?page=${result.page+1}&server_name=${result.search.server_name}&address=${result.search.address}&message=${result.search.message}` style="cursor: pointer")= result.page+1
+                if(result.page + 1 <= result.totalPages)
+                  a.icon.item(href=`/all-logs/?page=${result.page+1}&server_name=${result.search.server_name}&address=${result.search.address}&message=${result.search.message}` style="cursor: pointer")
+                    i.right.chevron.icon
+                else
+                  a.icon.item
+                    i.right.chevron.icon
+script(src="/js/main.js")
+script(src="/js/logs.js")

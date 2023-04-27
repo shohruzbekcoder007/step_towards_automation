@@ -10,69 +10,7 @@ head
   script(src="/js/semantic.min.js") 
   script(src="/js/axios.js")
 body
-#sidebar.ui.sidebar.inverted.vertical.menu.sidebar-menu
-  .item
-    .header General
-    .menu
-      a.item
-        div
-          i.icon.tachometer.alternate
-          | Dashboard
-  .item
-    .header Foydalanuvchilar
-    .menu
-      a.item
-        div
-          i.cogs.icon
-          | Ruxsat turlari
-      a.item
-        div
-          i.users.icon
-          | Foydalanuvchilar ro'yxati
-  .item
-    .header Shartnomalar
-    .menu
-      a.item(href="/agreements-type")
-        div
-          i.cogs.icon
-          | Shartnoma turlari
-      a.item(href="/agreements")
-        div
-          i.users.icon
-          | Shartnomalar ro'yxati
-  .item
-    .header Tashqi ip addresslar
-    .menu
-      a.item
-        div
-          i.cogs.icon
-          | Shartnoma turlari
-      a.item
-        div
-          i.users.icon
-          | Shartnomalar ro'yxati
-  a.item
-    div
-      i.icon.lightbulb
-      | Loglar bilan ishlash
-  .item
-    .header Other
-    .menu
-      a.item(href='#')
-        div
-          i.icon.envelope
-          |               Messages
-      a.item(href='#')
-        div
-          i.icon.calendar.alternate
-          |               Calendar
-  .ui.segment.inverted
-    .ui.tiny.olive.inverted.progress
-      .bar(style='width: 54%')
-      .label Monthly Bandwidth
-    .ui.tiny.teal.inverted.progress
-      .bar(style='width:78%')
-      .label Disk Usage
+include includes/sidebar.pug
 
 nav.ui.top.fixed.inverted.menu
   .left.menu
@@ -160,7 +98,7 @@ nav.ui.top.fixed.inverted.menu
               input#description_search(type="text", value=result.search.description, placeholder="Ko’rsatilgan xizmat")
             th 
             th 
-              button.ui.button Izlash
+              button.ui.button#agreements_search_btn Izlash
         tbody
         each element in result.agreements
           tr
@@ -180,18 +118,18 @@ nav.ui.top.fixed.inverted.menu
             th(colspan="8")
               .ui.right.floated.pagination.menu
                 if(result.page - 1 >= 1)
-                  a.icon.item(href=`/agreements/?page=${result.page-1}` style="cursor: pointer")
+                  a.icon.item(href=`/agreements/?page=${result.page-1}&organization_name=${result.search.organization_name}&tel_number=${result.search.tel_number}&contract_number=${result.search.contract_number}&agreement_type=${result.search.agreement_type}&description=${result.search.description}` style="cursor: pointer")
                     i.left.chevron.icon
                 else
                   a.icon.item
                     i.left.chevron.icon
                 if(result.page - 1 >= 1)
-                  a.item(href=`/agreements/?page=${result.page-1}` style="cursor: pointer")= result.page-1
+                  a.item(href=`/agreements/?page=${result.page-1}&organization_name=${result.search.organization_name}&tel_number=${result.search.tel_number}&contract_number=${result.search.contract_number}&agreement_type=${result.search.agreement_type}&description=${result.search.description}` style="cursor: pointer")= result.page-1
                 a.item= result.page
                 if(result.page + 1 <= result.totalPages)
-                  a.item(href=`/agreements/?page=${result.page+1}` style="cursor: pointer")= result.page+1
+                  a.item(href=`/agreements/?page=${result.page+1}&organization_name=${result.search.organization_name}&tel_number=${result.search.tel_number}&contract_number=${result.search.contract_number}&agreement_type=${result.search.agreement_type}&description=${result.search.description}` style="cursor: pointer")= result.page+1
                 if(result.page + 1 <= result.totalPages)
-                  a.icon.item(href=`/agreements/?page=${result.page+1}` style="cursor: pointer")
+                  a.icon.item(href=`/agreements/?page=${result.page+1}&organization_name=${result.search.organization_name}&tel_number=${result.search.tel_number}&contract_number=${result.search.contract_number}&agreement_type=${result.search.agreement_type}&description=${result.search.description}` style="cursor: pointer")
                     i.right.chevron.icon
                 else
                   a.icon.item
